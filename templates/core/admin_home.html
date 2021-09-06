@@ -1,0 +1,49 @@
+{% extends 'core/main.html' %}
+{% block title %}Admin Home{% endblock %}
+{% load static%}
+
+{% block content %}
+    <br><br>
+    
+{% if messages %}
+    <div class="alert alert-success">
+        {% for message in messages %}
+            {{ message }}
+        {% endfor %}
+    </div>
+{% endif %}
+        <div class="mt-5">
+            
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                  <th scope="col">First Name</th>
+                  <th scope="col">Last Name</th>
+                  <th scope="col">Email</th>
+                  <th scope="col">Date</th>
+                  <th scope="col">Time</th>
+                  <th scope="col">User Type</th>
+                  <th scope="col">Action</th>
+                </tr>
+                </thead>
+                <tbody>
+                    {% for user in users %}
+                        <tr>
+                          <th scope="row">{{ user.user.first_name }}</th>
+                          <td>{{ user.user.last_name }}</td>
+                          <td>{{ user.user.email }}</td>
+                          <td>{{ user.date }}</td>
+                          <td>{{ user.time }}</td>
+                          <td>{{ user.user.user_type }}</td>
+                          <td>
+                              <a class="btn btn-warning" href="{% url 'core:approve-attendance' user.user.id %}">Approve</a>
+                          </td>
+                          
+                        </tr>
+                    {% endfor %}
+                
+                </tbody>
+            </table>
+        </div>
+{% endblock %}
+

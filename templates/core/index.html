@@ -1,0 +1,52 @@
+{% extends 'core/main.html' %}
+{% block title %}Home{% endblock %}
+{% load static%}
+
+{% block content %}
+    <br><br><br><br>
+    {% if messages %}
+    <div class="alert alert-success">
+        {% for message in messages %}
+            {{ message }}
+        {% endfor %}
+    </div>
+{% endif %}
+    <center>
+        <form action="{% url 'core:attendance-request' %}" method="POST">
+            {% csrf_token %}
+            <input class="btn btn-primary" type="submit" value="Send Attendance Request">
+            
+        </form>
+    </center>
+
+<br><br>
+        <div class="mt-5">
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                  <th scope="col">Date</th>
+                  <th scope="col">Time</th>
+                  <th scope="col">Status</th>
+                </tr>
+                </thead>
+                <tbody>
+                    {% for att in attendances %}
+                        <tr>
+                            <td>{{ att.date }}</td>
+                            <td>{{ att.time }}</td>
+                            <td>
+                            {% if att.approved is True %}
+                                <a class="btn btn-outline-success">Approved</a>
+                            {% elif att.approved is False%}
+                                <a class="btn btn-outline-danger">Pending</a>
+                            {% endif %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                
+                </tbody>
+            </table>
+        </div>
+
+{% endblock %}
+
